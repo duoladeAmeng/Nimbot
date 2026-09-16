@@ -39,4 +39,4 @@ class OutboundMessage:
     media: list[str] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
     buttons: list[list[str]] = field(default_factory=list)
-    event: "OutboundEvent | None" = None
+    event: Any | None = None

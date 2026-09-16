@@ -1,17 +1,18 @@
+"""Immutable per-turn configuration; provider client identity may be shared."""
+from dataclasses import dataclass, replace
 
-from dataclasses import dataclass
-
-from duolaAgent.llm.providers.base import LLMProvider
+from duolaAgent.llm.providers.base import GenerationSettings, LLMProvider
 
 
-@dataclass(frozen=True)
-class GenerationSettings:
-    temperature: float = 0.7
-    max_tokens: int = 4096
+@dataclass(slots=True, frozen=True)
+class LLMRuntime:
+    provider: LLMProvider
+    model: str
+    generation: GenerationSettings = GenerationSettings()
+    context_window_tokens: int = 12000
 
-@dataclass(slots=True,frozen=True)
-class LLMRunTime:
-    privider:LLMProvider
-    model:str
-    generation:GenerationSettings
-    context_window_tokens:int
+    def with_overrides(self, **kwargs):
+        return replace(self, **kwargs)
+
+
+LLMRunTime = LLMRuntime  # Compatibility with the initial migration.

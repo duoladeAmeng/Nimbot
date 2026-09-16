@@ -1,8 +1,7 @@
-from rich.console import Console
-from rich.markdown import Markdown
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
-
+from rich.console import Console
+from rich.markdown import Markdown
 
 _prompt_session: PromptSession[str] | None = None
 
@@ -62,6 +61,19 @@ def print_agent_response(
         console.print(content)
 
     console.print()
+
+
+def print_agent_header(bot_name: str = "Duola") -> None:
+    console.print()
+    console.print(f"[cyan]🐻 {bot_name}[/cyan]")
+
+
+def print_stream_delta(content: str) -> None:
+    console.print(content, end="")
+
+
+def print_error(content: str) -> None:
+    console.print(f"[red]{content}[/red]")
 
 
 def print_goodbye() -> None:

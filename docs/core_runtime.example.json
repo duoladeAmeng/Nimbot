@@ -1,0 +1,55 @@
+{
+  "agents": {
+    "defaults": {
+      "provider": "openai-compatible",
+      "modelPreset": "primary",
+      "workspace": ".",
+      "maxToolIterations": 12,
+      "maxConcurrentSessions": 4,
+      "maxPendingMessages": 64,
+      "maxSubagents": 4,
+      "maxContinuationTurns": 12,
+      "concurrentTools": true,
+      "stream": true,
+      "retryAttempts": 2
+    }
+  },
+  "modelPresets": {
+    "primary": {
+      "provider": "openai-compatible",
+      "model": "primary-model",
+      "temperature": 0.7,
+      "maxTokens": 4096,
+      "contextWindowTokens": 32000,
+      "fallbacks": [
+        "backup"
+      ]
+    },
+    "backup": {
+      "provider": "anthropic",
+      "model": "backup-model",
+      "temperature": 0.4,
+      "maxTokens": 4096,
+      "contextWindowTokens": 16000
+    }
+  },
+  "providers": {
+    "openaiCompatible": {
+      "apiKey": "${DUOLA_OPENAI_KEY}",
+      "apiBase": "https://api.openai.com/v1"
+    },
+    "anthropic": {
+      "apiKey": "${DUOLA_ANTHROPIC_KEY}"
+    }
+  },
+  "tools": {
+    "plugins": true,
+    "exec": {
+      "enable": true,
+      "timeout": 60,
+      "sandbox": ""
+    },
+    "mcpServers": {},
+    "ssrfWhitelist": []
+  }
+}
